@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "RemoteRecords",
+            "request": "launch",
+            "type": "al",
+            "environmentType": "Production",
+            "environmentName": "Production",
+            "startupObjectId": 2500,
+            "startupObjectType": "Page",
+            "breakOnError": "All",
+            "launchBrowser": true,
+            "enableLongRunningSqlStatements": true,
+            "enableSqlInformationDebugger": true
+        }
+    ]
+}

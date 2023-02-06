@@ -1,0 +1,32 @@
+{
+  "id": "e75c2d8a-0597-4934-9ff6-168923a33926",
+  "name": "RemoteRecords",
+  "publisher": "Keith How",
+  "version": "1.0.0.13",
+  "brief": "Remote Records",
+  "description": "Remote Records",
+  "privacyStatement": "",
+  "EULA": "",
+  "help": "",
+  "url": "",
+  "logo": "./logo/KNH.jpg",
+  "dependencies": [],
+  "screenshots": [],
+  "platform": "1.0.0.0",
+  "application": "20.0.0.0",
+  "idRanges": [
+    {
+      "from": 51910,
+      "to": 51919
+    }
+  ],
+  "resourceExposurePolicy": {
+    "allowDebugging": true,
+    "allowDownloadingSource": true,
+    "includeSourceInSymbolFile": true
+  },
+  "runtime": "9.0",
+  "features": [
+    "NoImplicitWith"
+  ]
+}
