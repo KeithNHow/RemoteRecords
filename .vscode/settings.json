@@ -7,7 +7,7 @@
     ],
 
     "[al]": {
-        "editor.wordBasedSuggestions": false,
+        "editor.wordBasedSuggestions": "off",
         "editor.suggestSelection": "first",
         "editor.formatOnSave": true,
         "editor.codeLens": false,
@@ -24,7 +24,7 @@
         "generateReportLayout": true
     },
 
-    "CRS.ObjectNamePrefix": "KNH ",
+    "CRS.ObjectNamePrefix": "KNH",
     "CRS.DisableDefaultAlSnippets": false,
     "CRS.OnSaveAlFileAction": "Rename",
     "CRS.FileNamePattern": "<ObjectId>.<ObjectName>.<ObjectTypeShortPascalCase>.al",

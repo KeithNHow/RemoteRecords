@@ -1,7 +1,7 @@
 /// <summary>
 /// Table KNH API Table (ID 51910).
 /// </summary>
-table 51910 "API Table"
+table 51910 "KNHAPI_Table"
 {
     Caption = 'API Table';
     DataClassification = ToBeClassified;
@@ -14,9 +14,9 @@ table 51910 "API Table"
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                JsonWriteCU: Codeunit JsonWrite;
+                JsonWriteCU: Codeunit KNHJsonWrite;
             begin
-                JsonWriteCU.JsonReadAndWrite(Rec);
+                JsonWriteCU.JsonRead(Rec);
             end;
         }
         field(2; Name; Text[50])
@@ -62,22 +62,6 @@ table 51910 "API Table"
         field(10; Longtitude; Text[30])
         {
             Caption = 'Longtitude';
-            DataClassification = CustomerContent;
-        }
-        field(20; "Original Text"; Text[50])
-        {
-            Caption = 'Original Text';
-            DataClassification = CustomerContent;
-            trigger OnValidate()
-            var
-                TranslateAPI: Codeunit "Translate API";
-            begin
-                TranslateAPI.CallAPI("Original Text", "Translated Text");
-            end;
-        }
-        field(21; "Translated Text"; Text[50])
-        {
-            Caption = 'Translated Text';
             DataClassification = CustomerContent;
         }
     }

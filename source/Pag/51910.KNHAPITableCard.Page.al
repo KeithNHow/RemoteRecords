@@ -1,11 +1,11 @@
 /// <summary>
-/// Page KNH API Table Card (ID 51910).
+/// Page KNH_KNH API Table Card (ID 51910).
 /// </summary>
-page 51910 "KNH API Table Card"
+page 51910 "KNHAPI_Table_Card"
 {
     Caption = 'API Table Card';
     PageType = Card;
-    SourceTable = "API Table";
+    SourceTable = "KNHAPI_Table";
     UsageCategory = Lists;
     ApplicationArea = All;
     AboutText = 'With this test API page you import records into D365 Business Central.';
@@ -57,16 +57,6 @@ page 51910 "KNH API Table Card"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the value of the Post Code field.';
                 }
-                field("Original Text"; Rec."Original Text")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the text to be translated.';
-                }
-                field("Translated Text"; Rec."Translated Text")
-                {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the value of the translated text.';
-                }
             }
         }
     }
@@ -86,14 +76,14 @@ page 51910 "KNH API Table Card"
                 ApplicationArea = All;
                 trigger OnAction()
                 var
-                    JsonWriteCU: Codeunit JsonWrite;
+                    JsonWriteCU: Codeunit KNHJsonWrite;
                     ConfirmMsg: label 'Do you want to download the json file?';
-                    ElseMsg: label 'No Problem, Try next time.';
+                    NoConfirmMsg: label 'No Problem, Try next time.';
                 begin
                     if Confirm(ConfirmMsg, false) then
                         JsonWriteCU.Run()
                     else
-                        Message(ElseMsg);
+                        Message(NoConfirmMsg);
                 end;
             }
             action(HttpConnect)
@@ -108,9 +98,9 @@ page 51910 "KNH API Table Card"
                 PromotedOnly = true;
                 trigger OnAction()
                 var
-                    JsonWriteCU: Codeunit JsonWrite;
+                    JsonWriteCU: Codeunit KNHJsonWrite;
                 begin
-                    JsonWriteCU.APIConnect();
+                    JsonWriteCU.HttpTest();
                 end;
             }
         }
