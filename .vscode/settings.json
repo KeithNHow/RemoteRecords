@@ -5,34 +5,35 @@
         "${PerTenantExtensionCop}",
         "${UICop}"
     ],
-
     "[al]": {
-        "editor.wordBasedSuggestions": "off",
+        "editor.wordBasedSuggestions": "allDocuments",
         "editor.suggestSelection": "first",
         "editor.formatOnSave": true,
-        "editor.codeLens": false,
+        "editor.codeLens": true,
         "editor.semanticHighlighting.enabled": true,
     },
-
-    "al.ruleSetPath": "./.vscode/ruleset.json",
     "al.backgroundCodeAnalysis": true,
     "al.enableCodeActions": true,
     "al.packageCachePath": "./.alpackages",
     "al-test-runner.sendDebugTelemetry": false,
-    "al.compilationOptions": 
-    {
+    "al.compilationOptions": {
         "generateReportLayout": true
     },
-
+    "alOutline.codeCleanupActions": [
+        "AddToolTips",
+        "FixKeywordsCase",
+        "FixIdentifiersCase",
+        "SortVariables",
+        "AddApplicationAreas",
+        "SortTableFields",
+        "AddMissingParentheses",
+        "RemoveBeginEnd",
+        "RemoveUnusedVariables"
+    ],
+    "workbench.editor.enablePreview": true,
     "CRS.ObjectNamePrefix": "KNH",
-    "CRS.DisableDefaultAlSnippets": false,
-    "CRS.OnSaveAlFileAction": "Rename",
-    "CRS.FileNamePattern": "<ObjectId>.<ObjectName>.<ObjectTypeShortPascalCase>.al",
-    "CRS.FileNamePatternExtensions": "<ObjectId>.<ObjectName>.<ObjectTypeShortPascalCase>.al",
-    "CRS.FileNamePatternPageCustomizations": "<ObjectId>.<ObjectName>.<ObjectTypeShortPascalCase>.al",
-
-    //"workbench.colorCustomizations": {
-    //"editorError.foreground": "#be0101", 
-    //"editorWarning.foreground": "#dceb06"
-    //},
+    //"CRS.OnSaveAlFileAction": "Rename",
+    "CRS.FileNamePattern": "<ObjectName>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternExtensions": "<ObjectName>.<ObjectTypeShortPascalCase>.al",
+    "CRS.FileNamePatternPageCustomizations": "<ObjectName>.<ObjectTypeShortPascalCase>.al"
 }
