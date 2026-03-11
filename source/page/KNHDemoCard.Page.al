@@ -4,13 +4,13 @@
 /// </summary>
 page 51910 KNHDemoCard
 {
-    Caption = 'API Table Card';
+    Caption = 'Demo API page';
     PageType = Card;
     SourceTable = KNHDemo;
     UsageCategory = Lists;
     ApplicationArea = All;
-    AboutText = 'With this test API page you import records into D365 Business Central.';
-    AboutTitle = 'About API Table Card';
+    AboutText = 'With this Demo API page you can import records. Test the API connection and download a sample Json file. The Json file is based on the first record of the Customer table.';
+    AboutTitle = 'About Demo API page';
 
     layout
     {
