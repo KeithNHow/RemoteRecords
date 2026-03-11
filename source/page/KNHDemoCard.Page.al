@@ -65,10 +65,10 @@ page 51910 KNHDemoCard
     {
         area(Processing)
         {
-            action(CreateJson)
+            action(ExportJson)
             {
-                Caption = 'Download Sample Json';
-                ToolTip = 'Create a download sample json file.';
+                Caption = 'Export Customer to Json';
+                ToolTip = 'Export customer details to a json file.';
                 Image = ExportFile;
                 Promoted = true;
                 PromotedCategory = Process;
@@ -77,7 +77,29 @@ page 51910 KNHDemoCard
                 ApplicationArea = All;
                 trigger OnAction()
                 var
-                    JsonWriteCU: Codeunit KNHJsonWrite;
+                    JsonWriteCU: Codeunit KNHJsonFunctions;
+                    ConfirmMsg: Label 'Do you want to download customer details to a json file?';
+                    NoConfirmMsg: Label 'No Problem, Try next time.';
+                begin
+                    if Confirm(ConfirmMsg, false) then
+                        JsonWriteCU.JsonExport()
+                    else
+                        Message(NoConfirmMsg);
+                end;
+            }
+            action(ImportJson)
+            {
+                Caption = 'Import Json to Demo record';
+                ToolTip = 'Import a json record from a file.';
+                Image = Import;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ApplicationArea = All;
+                trigger OnAction()
+                var
+                    JsonWriteCU: Codeunit KNHJsonFunctions;
                     ConfirmMsg: Label 'Do you want to download the json file?';
                     NoConfirmMsg: Label 'No Problem, Try next time.';
                 begin
@@ -99,7 +121,7 @@ page 51910 KNHDemoCard
                 PromotedOnly = true;
                 trigger OnAction()
                 var
-                    JsonWriteCU: Codeunit KNHJsonWrite;
+                    JsonWriteCU: Codeunit KNHJsonFunctions;
                 begin
                     JsonWriteCU.HttpTest();
                 end;

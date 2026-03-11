@@ -5,6 +5,6 @@ permissionset 51910 KNHRemoteRecords
     Permissions =
         table KNHDemo = X,
         tabledata KNHDemo = RMID,
-        codeunit KNHJsonWrite = X,
+        codeunit KNHJsonFunctions = X,
         page KNHDemoCard = X;
 }

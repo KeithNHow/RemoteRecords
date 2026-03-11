@@ -4,9 +4,9 @@
 /// The HttpTest method makes a get request to an API endpoint and returns the response. 
 /// The JsonRead method makes a get request to an API endpoint, reads the Json response, and places the data in the KNHDemo table.
 /// </summary>
-codeunit 51910 KNHJsonWrite
+codeunit 51910 KNHJsonFunctions
 {
-    trigger OnRun()
+    procedure JsonExport()
     var
         Cust: Record Customer;
         TempBlob: Codeunit "Temp Blob";
@@ -52,10 +52,10 @@ codeunit 51910 KNHJsonWrite
     var
         Client: HttpClient;
         Content: HttpContent;
-        Request: HttpRequestMessage;
+        //Request: HttpRequestMessage;
         Response: HttpResponseMessage;
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
-        Output: Text;
+        //Output: Text;
         Result: Text;
     begin
         //Method 1
@@ -68,6 +68,7 @@ codeunit 51910 KNHJsonWrite
             Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
 
         //Method 2
+        /*
         Request.SetRequestUri('https://needlecraftworld.co.uk');
         Request.Method('Get');
         Client.Send(Request, Response);
@@ -77,6 +78,7 @@ codeunit 51910 KNHJsonWrite
             Message(Output);
         end else
             Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
+        */
     end;
 
     procedure JsonRead(var KNHDemo: Record KNHDemo)

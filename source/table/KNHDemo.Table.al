@@ -15,7 +15,7 @@ table 51910 KNHDemo
             DataClassification = ToBeClassified;
             trigger OnValidate()
             var
-                JsonWriteCU: Codeunit KNHJsonWrite;
+                JsonWriteCU: Codeunit KNHJsonFunctions;
             begin
                 JsonWriteCU.JsonRead(Rec);
             end;
