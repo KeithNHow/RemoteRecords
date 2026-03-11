@@ -87,11 +87,11 @@ codeunit 51910 KNHJsonFunctions
         Content: HttpContent;
         Response: HttpResponseMessage;
         JObject: JsonObject;
-        OutputObject: JsonObject;
+        InputObject: JsonObject;
         JToken: JsonToken;
-        OutputToken: JsonToken;
+        InputToken: JsonToken;
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
-        Output: Text;
+        Input: Text;
         Result: Text;
     begin
         Client.Get('https://needlecraftworld.co.uk' + Format(KNHDemo.Id), Response);
@@ -110,19 +110,22 @@ codeunit 51910 KNHJsonFunctions
             JObject.Get('email', JToken); //Place email address in json token
             KNHDemo.Email := CopyStr(JToken.AsValue().AsText(), 1, 50); //Place json token value in email
 
-            JObject.Get('address', JToken); //Get address from json object and place address in json token
+            JObject.Get('addressdetails', JToken); //Get address details from json object and place address in json token
             if JToken.IsObject then begin
-                JToken.WriteTo(Output); //Write from Json token to text variable
-                OutputObject.ReadFrom(Output); //Read from text variable to Json object
+                JToken.WriteTo(Input); //Write from Json token to text variable
+                InputObject.ReadFrom(Input); //Read from text variable to Json object
 
-                OutputObject.Get('street', OutputToken); //Get street from json object and place in json token 
-                KNHDemo.Address := CopyStr(OutputToken.AsValue().AsText(), 1, 50); //Place in demo table
+                InputObject.Get('address', InputToken); //Get street from json object and place in json token 
+                KNHDemo.Address := CopyStr(InputToken.AsValue().AsText(), 1, 50); //Place in demo table
 
-                OutputObject.Get('suite', OutputToken); //Get suite from json object and place in json token
-                KNHDemo."Address 2" := CopyStr(OutputToken.AsValue().AsText(), 1, 50); //Place in demo table
+                InputObject.Get('address2', InputToken); //Get address2 from json object and place in json token
+                KNHDemo."Address 2" := CopyStr(InputToken.AsValue().AsText(), 1, 50); //Place in demo table
 
-                OutputObject.Get('city', OutputToken); //Get city from json object and place in json token
-                KNHDemo.City := CopyStr(OutputToken.AsValue().AsText(), 1, 30); //Place in demo table
+                InputObject.Get('city', InputToken); //Get city from json object and place in json token
+                KNHDemo.City := CopyStr(InputToken.AsValue().AsText(), 1, 30); //Place in demo table
+
+                InputObject.Get('postcode', InputToken); //Get postcode from json object and place in json token
+                KNHDemo."Post Code" := CopyStr(InputToken.AsValue().AsText(), 1, 20); //Place in demo table
             end else
                 Error('Json data is missing');
         end else
