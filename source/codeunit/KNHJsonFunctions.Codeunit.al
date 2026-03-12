@@ -106,49 +106,49 @@ codeunit 51910 KNHJsonFunctions
                 InputObject.Get('id', InputToken); //Get id from json object and place in json token.
                 KNHDemo.Id := CopyStr(InputToken.AsValue().AsCode(), 1, 20); //Place json token value in id field of demo table.
 
-                InputObject.Get('name', InputToken);
-                KNHDemo.Name := CopyStr(InputToken.AsValue().AsText(), 1, 50);
+                if InputObject.Get('name', InputToken) then
+                    KNHDemo.Name := CopyStr(InputToken.AsValue().AsText(), 1, 50);
 
-                InputObject.Get('data', InputToken);
+                InputObject.Get('data', InputToken); //Get data from json object and place in json token. This is a nested json object that requires the next steps to read values from it.
                 if InputToken.IsObject then begin //Check if data token is a json object
                     InputToken.WriteTo(Input); //Write from json token to text variable. This is needed to read the nested json object in the next step.
                     InputObject.ReadFrom(Input); //Place nested json in json object variable to read values from it.
 
-                    InputObject.Get('year', InputToken); //Get year from json object and place in json token
-                    KNHDemo.Year := InputToken.AsValue().AsInteger(); //Place in demo table
+                    if InputObject.Get('year', InputToken) then //Get year from json object and place in json token
+                        KNHDemo.Year := InputToken.AsValue().AsInteger(); //Place in demo table
 
-                    InputObject.Get('price', InputToken);
+                    if InputObject.Get('price', InputToken) then;
                     KNHDemo.Price := InputToken.AsValue().AsDecimal();
 
-                    InputObject.Get('CPU model', InputToken);
-                    KNHDemo."CPU Model" := CopyStr(InputToken.AsValue().AsText(), 1, 30);
+                    if InputObject.Get('CPU model', InputToken) then
+                        KNHDemo."CPU Model" := CopyStr(InputToken.AsValue().AsText(), 1, 30);
 
-                    InputObject.Get('Hard disk size', InputToken);
-                    KNHDemo."Hard Disk Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Hard disk size', InputToken) then
+                        KNHDemo."Hard Disk Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('color', InputToken);
-                    KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('color', InputToken) then
+                        KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('Strap Color', InputToken);
-                    KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Strap Color', InputToken) then
+                        KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('Capacity', InputToken);
-                    KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Capacity', InputToken) then
+                        KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('Capacity GB', InputToken);
-                    KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Capacity GB', InputToken) then
+                        KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('generation', InputToken);
-                    KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('generation', InputToken) then
+                        KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('Generation', InputToken);
-                    KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Generation', InputToken) then
+                        KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('Case Size', InputToken);
-                    KNHDemo."Case Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Case Size', InputToken) then
+                        KNHDemo."Case Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    InputObject.Get('Description', InputToken);
-                    KNHDemo.Description := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                    if InputObject.Get('Description', InputToken) then
+                        KNHDemo.Description := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     KNHDemo.Insert();
                 end else
