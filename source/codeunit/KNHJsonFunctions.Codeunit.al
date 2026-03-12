@@ -55,15 +55,17 @@ codeunit 51910 KNHJsonFunctions
         //Request: HttpRequestMessage;
         Response: HttpResponseMessage;
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
+        PosResponseMsg: Label 'Response was positive %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         //Output: Text;
         Result: Text;
     begin
         //Method 1
-        Client.Get('https://needlecraftworld.co.uk', Response);
+        Client.Get('https://api.restful-api.dev/objects', Response);
         if Response.IsSuccessStatusCode then begin
+            Message(PosResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
             Content := Response.Content;
             Content.ReadAs(Result);
-            Message(Result);
+            //Message(Result);
         end else
             Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
 
@@ -81,54 +83,92 @@ codeunit 51910 KNHJsonFunctions
         */
     end;
 
-    procedure JsonRead(var KNHDemo: Record KNHDemo)
+    procedure JsonRead()
     var
+        KNHDemo: Record KNHDemoAsset;
         Client: HttpClient;
         Content: HttpContent;
         Response: HttpResponseMessage;
-        JObject: JsonObject;
+        InputArray: JsonArray;
         InputObject: JsonObject;
-        JToken: JsonToken;
         InputToken: JsonToken;
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         Input: Text;
         Result: Text;
     begin
-        Client.Get('https://needlecraftworld.co.uk' + Format(KNHDemo.Id), Response);
+        Client.Get('https://api.restful-api.dev/objects', Response);
         if Response.IsSuccessStatusCode then begin //Check for response
-
-            Content := Response.Content; //Store content
+            Content := Response.Content; //Get content from response
             Content.ReadAs(Result); //Place content in text variable
-            JObject.ReadFrom(Result); //Place result in Json object
+            InputArray.ReadFrom(Result);
+            //JObject.ReadFrom(Result); //Place result in Json object
+            foreach InputToken in InputArray do begin
+                InputObject.Get('id', InputToken); //Get id from json object and place in json token.
+                KNHDemo.Id := CopyStr(InputToken.AsValue().AsCode(), 1, 20); //Place json token value in id field of demo table.
 
-            JObject.Get('name', JToken); //Place name in json token
-            KNHDemo.Name := CopyStr(JToken.AsValue().AsText(), 1, 50); //Place json token value in email
+                InputObject.Get('name', InputToken);
+                KNHDemo.Name := CopyStr(InputToken.AsValue().AsText(), 1, 50);
 
-            JObject.Get('username', JToken); //place username in json token
-            KNHDemo."User Name" := CopyStr(JToken.AsValue().AsText(), 1, 50); //Place json token value in email
+                InputObject.Get('data', InputToken);
+                if InputToken.IsObject then begin //Check if data token is a json object
+                    InputToken.WriteTo(Input); //Write from json token to text variable. This is needed to read the nested json object in the next step.
+                    InputObject.ReadFrom(Input); //Place nested json in json object variable to read values from it.
 
-            JObject.Get('email', JToken); //Place email address in json token
-            KNHDemo.Email := CopyStr(JToken.AsValue().AsText(), 1, 50); //Place json token value in email
+                    InputObject.Get('year', InputToken); //Get year from json object and place in json token
+                    KNHDemo.Year := InputToken.AsValue().AsInteger(); //Place in demo table
 
-            JObject.Get('addressdetails', JToken); //Get address details from json object and place address in json token
-            if JToken.IsObject then begin
-                JToken.WriteTo(Input); //Write from Json token to text variable
-                InputObject.ReadFrom(Input); //Read from text variable to Json object
+                    InputObject.Get('price', InputToken);
+                    KNHDemo.Price := InputToken.AsValue().AsDecimal();
 
-                InputObject.Get('address', InputToken); //Get street from json object and place in json token 
-                KNHDemo.Address := CopyStr(InputToken.AsValue().AsText(), 1, 50); //Place in demo table
+                    InputObject.Get('CPU model', InputToken);
+                    KNHDemo."CPU Model" := CopyStr(InputToken.AsValue().AsText(), 1, 30);
 
-                InputObject.Get('address2', InputToken); //Get address2 from json object and place in json token
-                KNHDemo."Address 2" := CopyStr(InputToken.AsValue().AsText(), 1, 50); //Place in demo table
+                    InputObject.Get('Hard disk size', InputToken);
+                    KNHDemo."Hard Disk Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                InputObject.Get('city', InputToken); //Get city from json object and place in json token
-                KNHDemo.City := CopyStr(InputToken.AsValue().AsText(), 1, 30); //Place in demo table
+                    InputObject.Get('color', InputToken);
+                    KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                InputObject.Get('postcode', InputToken); //Get postcode from json object and place in json token
-                KNHDemo."Post Code" := CopyStr(InputToken.AsValue().AsText(), 1, 20); //Place in demo table
-            end else
-                Error('Json data is missing');
+                    InputObject.Get('Strap Color', InputToken);
+                    KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    InputObject.Get('Capacity', InputToken);
+                    KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    InputObject.Get('Capacity GB', InputToken);
+                    KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    InputObject.Get('generation', InputToken);
+                    KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    InputObject.Get('Generation', InputToken);
+                    KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    InputObject.Get('Case Size', InputToken);
+                    KNHDemo."Case Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    InputObject.Get('Description', InputToken);
+                    KNHDemo.Description := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+
+                    KNHDemo.Insert();
+                end else
+                    Error('Json data is missing');
+            end;
         end else
             Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
+    end;
+
+    //Not in use but demonstrates how to handle a json array response from an API endpoint
+    procedure HandleJsonArray(JsonArray: JsonArray)
+    var
+        JsonObject: JsonObject;
+        JsonToken: JsonToken;
+    begin
+        foreach JsonToken in JsonArray do begin
+            if JsonToken.IsObject() then
+                JsonObject := JsonToken.AsObject();
+            JsonObject.Get('name', JsonToken); //Get name from json object and place in json token
+            Message('Name: %1', JsonToken.AsValue().AsText()); //Display name value from json token
+        end;
     end;
 }

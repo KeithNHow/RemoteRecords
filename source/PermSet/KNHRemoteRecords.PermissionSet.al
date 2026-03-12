@@ -3,8 +3,8 @@ permissionset 51910 KNHRemoteRecords
     Assignable = true;
     Caption = 'Remote Records', MaxLength = 30;
     Permissions =
-        table KNHDemo = X,
-        tabledata KNHDemo = RMID,
+        table KNHDemoAsset = X,
+        tabledata KNHDemoAsset = RMID,
         codeunit KNHJsonFunctions = X,
-        page KNHDemoCard = X;
+        page KNHDemoAssetsCard = X;
 }

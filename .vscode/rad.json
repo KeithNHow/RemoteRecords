@@ -1,1 +1,1 @@
-﻿{"Added":[],"Modified":[{"Id":51910,"Kind":12,"Name":"KNHDemoCard","Namespace":""},{"Id":51910,"Kind":10,"Name":"KNHDemo","Namespace":""},{"Id":51910,"Kind":11,"Name":"KNHJsonWrite","Namespace":""},{"Id":51910,"Kind":26,"Name":"KNHRemoteRecords","Namespace":""}],"Removed":[]}
+﻿{"Added":[],"Modified":[{"Id":51910,"Kind":10,"Name":"KNHDemoAsset","Namespace":""},{"Id":51910,"Kind":11,"Name":"KNHJsonFunctions","Namespace":""}],"Removed":[]}

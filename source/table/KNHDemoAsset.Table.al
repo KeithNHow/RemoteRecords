@@ -1,23 +1,23 @@
 /// <summary>
 /// New table for demo, which will be used for API test. The OnValidate trigger of Id field is used to call JsonRead method in KNH Json Write codeunit, which will read the record and write to a json file in the server.
 /// </summary>
-table 51910 KNHDemo
+table 51910 KNHDemoAsset
 {
-    Caption = 'API Table';
-    DataClassification = ToBeClassified;
+    Caption = 'Demo Table';
+    DataClassification = CustomerContent;
     AllowInCustomizations = AsReadWrite;
 
     fields
     {
-        field(1; Id; Integer)
+        field(1; Id; Code[20])
         {
             Caption = 'Id';
-            DataClassification = ToBeClassified;
+            DataClassification = CustomerContent;
             trigger OnValidate()
             var
                 JsonWriteCU: Codeunit KNHJsonFunctions;
             begin
-                JsonWriteCU.JsonRead(Rec);
+                JsonWriteCU.JsonRead();
             end;
         }
         field(2; Name; Text[50])
@@ -25,44 +25,49 @@ table 51910 KNHDemo
             Caption = 'Name';
             DataClassification = CustomerContent;
         }
-        field(3; "User Name"; Text[50])
+        field(3; Year; Integer)
         {
-            Caption = 'User Name';
+            Caption = 'Year';
             DataClassification = CustomerContent;
         }
-        field(4; Email; Text[100])
+        field(4; Price; Decimal)
         {
-            Caption = 'Email';
+            Caption = 'Price';
             DataClassification = CustomerContent;
         }
-        field(5; Address; Text[50])
+        field(5; "CPU Model"; Text[50])
         {
-            Caption = 'Address';
+            Caption = '';
             DataClassification = CustomerContent;
         }
-        field(6; "Address 2"; Text[50])
+        field(6; "Hard Disk Size"; Text[50])
         {
-            Caption = 'Address 2';
+            Caption = 'Hard Disk Size';
             DataClassification = CustomerContent;
         }
-        field(7; City; Text[30])
+        field(7; Colour; Text[20])
         {
-            Caption = 'City';
+            Caption = 'Colour';
             DataClassification = CustomerContent;
         }
-        field(8; "Post Code"; Code[20])
+        field(8; Capacity; Text[20])
         {
-            Caption = 'Post Code';
+            Caption = 'Capacity';
             DataClassification = CustomerContent;
         }
-        field(9; Latitude; Text[30])
+        field(9; Generation; Text[30])
         {
-            Caption = 'Latitude';
+            Caption = 'Generation';
             DataClassification = CustomerContent;
         }
-        field(10; Longtitude; Text[30])
+        field(10; "Case Size"; Text[20])
         {
-            Caption = 'Longtitude';
+            Caption = 'Case Size';
+            DataClassification = CustomerContent;
+        }
+        field(11; Description; Text[20])
+        {
+            Caption = 'Description';
             DataClassification = CustomerContent;
         }
     }
