@@ -5,12 +5,12 @@
 page 51910 KNHDemoAssetsCard
 {
     Caption = 'Demo Assets Card';
+    DataCaptionFields = Id, Name;
     PageType = Card;
     SourceTable = KNHDemoAsset;
     UsageCategory = Lists;
     ApplicationArea = All;
-    AboutText = 'With this Demo API page you can import records. Test the API connection and download a sample Json file. The Json file is based on the first record of the Customer table.';
-    AboutTitle = 'About Demo API page';
+
     Editable = true;
 
     layout

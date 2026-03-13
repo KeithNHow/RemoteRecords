@@ -52,11 +52,9 @@ codeunit 51910 KNHJsonFunctions
     var
         Client: HttpClient;
         Content: HttpContent;
-        //Request: HttpRequestMessage;
         Response: HttpResponseMessage;
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         PosResponseMsg: Label 'Response was positive %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
-        //Output: Text;
         Result: Text;
     begin
         //Method 1
@@ -65,7 +63,6 @@ codeunit 51910 KNHJsonFunctions
             Message(PosResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
             Content := Response.Content;
             Content.ReadAs(Result);
-            //Message(Result);
         end else
             Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
 
@@ -95,15 +92,18 @@ codeunit 51910 KNHJsonFunctions
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         Input: Text;
         Result: Text;
+        ArrayCounter: Integer;
     begin
         Client.Get('https://api.restful-api.dev/objects', Response);
         if Response.IsSuccessStatusCode then begin //Check for response
             Content := Response.Content; //Get content from response
             Content.ReadAs(Result); //Place content in text variable
-            InputArray.ReadFrom(Result);
-            //JObject.ReadFrom(Result); //Place result in Json object
+            InputArray.ReadFrom(Result); //Place text variable content in json array variable to read values from it.
+            ArrayCounter := InputArray.Count(); //Count number of items in json array.
             foreach InputToken in InputArray do begin
-                InputObject.Get('id', InputToken); //Get id from json object and place in json token.
+                if InputToken.IsObject then
+                    InputObject := InputToken.AsObject(); //Place json token in json object variable to read values from it.
+                InputObject.Get('id', InputToken); //Get id from json object and place in json token
                 KNHDemo.Id := CopyStr(InputToken.AsValue().AsCode(), 1, 20); //Place json token value in id field of demo table.
 
                 if InputObject.Get('name', InputToken) then
@@ -117,8 +117,8 @@ codeunit 51910 KNHJsonFunctions
                     if InputObject.Get('year', InputToken) then //Get year from json object and place in json token
                         KNHDemo.Year := InputToken.AsValue().AsInteger(); //Place in demo table
 
-                    if InputObject.Get('price', InputToken) then;
-                    KNHDemo.Price := InputToken.AsValue().AsDecimal();
+                    if InputObject.Get('price', InputToken) then
+                        KNHDemo.Price := InputToken.AsValue().AsDecimal();
 
                     if InputObject.Get('CPU model', InputToken) then
                         KNHDemo."CPU Model" := CopyStr(InputToken.AsValue().AsText(), 1, 30);
@@ -152,7 +152,8 @@ codeunit 51910 KNHJsonFunctions
 
                     KNHDemo.Insert();
                 end else
-                    Error('Json data is missing');
+                    if ArrayCounter = 0 then
+                        Error('Json data is missing');
             end;
         end else
             Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
