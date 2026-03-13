@@ -8,7 +8,6 @@ page 51910 KNHDemoAssetsCard
     DataCaptionFields = Id, Name;
     PageType = Card;
     SourceTable = KNHDemoAsset;
-    UsageCategory = Lists;
     ApplicationArea = All;
 
     Editable = true;

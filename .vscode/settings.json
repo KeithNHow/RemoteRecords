@@ -30,6 +30,7 @@
         "RemoveBeginEnd",
         "RemoveUnusedVariables"
     ],
+    "al.ruleSetPath": "./.vscode/ruleset.json",
     "workbench.editor.enablePreview": true,
     "CRS.ObjectNamePrefix": "KNH",
     //"CRS.OnSaveAlFileAction": "Rename",
