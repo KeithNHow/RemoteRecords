@@ -2,7 +2,7 @@ page 51911 KNHDemoAssetsList
 {
     ApplicationArea = Basic, Suite;
     Caption = 'Demo Assets List';
-    CardPageID = KNHDemoAssetsCard;
+    CardPageId = KNHDemoAssetsCard;
     Editable = false;
     PageType = List;
     QueryCategory = 'Demo Assets List';
@@ -50,7 +50,7 @@ page 51911 KNHDemoAssetsList
                 }
             }
         }
-        area(Factboxes)
+        area(FactBoxes)
         {
             part("Attached Documents List"; "Doc. Attachment List Factbox")
             {
@@ -58,7 +58,7 @@ page 51911 KNHDemoAssetsList
                 Caption = 'Documents';
                 UpdatePropagation = Both;
                 SubPageLink = "Table ID" = const(Database::KNHDemoAsset),
-                              "No." = field("Id");
+                              "No." = field(Id);
                 Visible = not this.IsOfficeAddin;
             }
         }

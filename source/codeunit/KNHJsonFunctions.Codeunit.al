@@ -86,13 +86,13 @@ codeunit 51910 KNHJsonFunctions
         Client: HttpClient;
         Content: HttpContent;
         Response: HttpResponseMessage;
+        ArrayCounter: Integer;
         InputArray: JsonArray;
         InputObject: JsonObject;
         InputToken: JsonToken;
         NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         Input: Text;
         Result: Text;
-        ArrayCounter: Integer;
     begin
         Client.Get('https://api.restful-api.dev/objects', Response);
         if Response.IsSuccessStatusCode then begin //Check for response
