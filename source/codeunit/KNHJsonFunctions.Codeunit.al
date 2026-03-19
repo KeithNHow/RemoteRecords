@@ -1,113 +1,113 @@
 /// <summary>
 /// This codeunit demonstrates how to write Json data and make Http requests. It includes a method that reads Json data and places it in a table. 
 /// The OnRun trigger creates a Json file based on the first record of the Customer table. 
-/// The HttpTest method makes a get request to an API endpoint and returns the response. 
-/// The JsonRead method makes a get request to an API endpoint, reads the Json response, and places the data in the KNHDemo table.
+/// The HttpTest method makes a get request to an API endpoint and returns the HttpResponseMessage. 
+/// The JsonRead method makes a get request to an API endpoint, reads the Json HttpResponseMessage, and places the data in the KNHDemo table.
 /// </summary>
 codeunit 51910 KNHJsonFunctions
 {
     procedure JsonExport()
     var
-        Cust: Record Customer;
+        Customer: Record Customer;
         TempBlob: Codeunit "Temp Blob";
-        InStr: InStream;
+        InStream: InStream;
         Arr: JsonArray;
         SecondArr: JsonArray;
         Object: JsonObject;
         SecondObject: JsonObject;
         ThirdObject: JsonObject;
-        OutStr: OutStream;
+        OutStream: OutStream;
         FileName: Text;
         Result: Text;
     begin
         FileName := 'Customer.Json'; //name file
-        Cust.Get('10000'); //get cust rec
+        Customer.Get('10000'); //get cust rec
         //first section
-        Object.Add('No.', Cust."No.");
-        Object.Add('Name', Cust.Name);
+        Object.Add('No.', Customer."No.");
+        Object.Add('Name', Customer.Name);
 
         //second section
-        SecondObject.Add('Address', Cust.Address);
-        SecondObject.Add('City', Cust.City);
-        SecondObject.Add('Country', Cust."Country/Region Code");
+        SecondObject.Add('Address', Customer.Address);
+        SecondObject.Add('City', Customer.City);
+        SecondObject.Add('Country', Customer."Country/Region Code");
         Arr.Add(SecondObject);
         Object.Add('Correspondance', Arr);
 
         //third section
-        ThirdObject.Add('GBPG', Cust."Gen. Bus. Posting Group");
-        ThirdObject.Add('CPG', Cust."Customer Posting Group");
+        ThirdObject.Add('GBPG', Customer."Gen. Bus. Posting Group");
+        ThirdObject.Add('CPG', Customer."Customer Posting Group");
         SecondArr.Add(ThirdObject);
         Object.Add('Posing Group', SecondArr);
 
         //Download the json file
-        TempBlob.CreateInStream(InStr);
-        TempBlob.CreateOutStream(OutStr);
-        Object.WriteTo(OutStr); //Write from Json object to outstream variable
-        OutStr.WriteText(Result); //Write from outstream object to text varaible
-        InStr.ReadText(Result); //Read from instream variable to text varaible
-        DownloadFromStream(InStr, 'Download Json Data', 'C:\Temp\', '', FileName); //Sends instream to file and downloads it from server to client
+        TempBlob.CreateInStream(InStream);
+        TempBlob.CreateOutStream(OutStream);
+        Object.WriteTo(OutStream); //Write from Json object to outstream variable
+        OutStream.WriteText(Result); //Write from outstream object to text varaible
+        InStream.ReadText(Result); //Read from instream variable to text varaible
+        DownloadFromStream(InStream, 'Download Json Data', 'C:\Temp\', '', FileName); //Sends instream to file and downloads it from server to client
     end;
 
     procedure HttpTest()
     var
-        Client: HttpClient;
-        Content: HttpContent;
-        Response: HttpResponseMessage;
-        NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
-        PosResponseMsg: Label 'Response was positive %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
+        HttpClient: HttpClient;
+        HttpContent: HttpContent;
+        HttpResponseMessage: HttpResponseMessage;
+        NegHttpResponseMessageMsg: Label 'HttpResponseMessage was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
+        PosHttpResponseMessageMsg: Label 'HttpResponseMessage was positive %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         Result: Text;
     begin
         //Method 1
-        Client.Get('https://api.restful-api.dev/objects', Response);
-        if Response.IsSuccessStatusCode then begin
-            Message(PosResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
-            Content := Response.Content;
-            Content.ReadAs(Result);
+        HttpClient.Get('https://api.restful-api.dev/objects', HttpResponseMessage);
+        if HttpResponseMessage.IsSuccessStatusCode then begin
+            Message(PosHttpResponseMessageMsg, HttpResponseMessage.HttpStatusCode, HttpResponseMessage.ReasonPhrase);
+            HttpContent := HttpResponseMessage.Content;
+            HttpContent.ReadAs(Result);
         end else
-            Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
+            Message(NegHttpResponseMessageMsg, HttpResponseMessage.HttpStatusCode, HttpResponseMessage.ReasonPhrase);
 
         //Method 2
         /*
         Request.SetRequestUri('https://needlecraftworld.co.uk');
         Request.Method('Get');
-        Client.Send(Request, Response);
-        if Response.IsSuccessStatusCode then begin
-            Content := Response.Content;
+        Client.Send(Request, HttpResponseMessage);
+        if HttpResponseMessage.IsSuccessStatusCode then begin
+            Content := HttpResponseMessage.Content;
             Content.ReadAs(Output);
             Message(Output);
         end else
-            Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
+            Message(NegHttpResponseMessageMsg, HttpResponseMessage.HttpStatusCode, HttpResponseMessage.ReasonPhrase);
         */
     end;
 
     procedure JsonRead()
     var
-        KNHDemo: Record KNHDemoAsset;
-        Client: HttpClient;
-        Content: HttpContent;
-        Response: HttpResponseMessage;
+        KNHDemoAsset: Record KNHDemoAsset;
+        HttpClient: HttpClient;
+        HttpContent: HttpContent;
+        HttpHttpResponseMessageMessage: HttpResponseMessage;
         ArrayCounter: Integer;
         InputArray: JsonArray;
         InputObject: JsonObject;
         InputToken: JsonToken;
-        NegResponseMsg: Label 'Response was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
+        NegHttpResponseMessageMsg: Label 'HttpResponseMessage was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         Input: Text;
         Result: Text;
     begin
-        Client.Get('https://api.restful-api.dev/objects', Response);
-        if Response.IsSuccessStatusCode then begin //Check for response
-            Content := Response.Content; //Get content from response
-            Content.ReadAs(Result); //Place content in text variable
+        HttpClient.Get('https://api.restful-api.dev/objects', HttpHttpResponseMessageMessage);
+        if HttpHttpResponseMessageMessage.IsSuccessStatusCode then begin //Check for HttpResponseMessage
+            HttpContent := HttpHttpResponseMessageMessage.Content; //Get content from HttpResponseMessage
+            HttpContent.ReadAs(Result); //Place content in text variable
             InputArray.ReadFrom(Result); //Place text variable content in json array variable to read values from it.
             ArrayCounter := InputArray.Count(); //Count number of items in json array.
             foreach InputToken in InputArray do begin
                 if InputToken.IsObject then
                     InputObject := InputToken.AsObject(); //Place json token in json object variable to read values from it.
                 InputObject.Get('id', InputToken); //Get id from json object and place in json token
-                KNHDemo.Id := CopyStr(InputToken.AsValue().AsCode(), 1, 20); //Place json token value in id field of demo table.
+                KNHDemoAsset.Id := CopyStr(InputToken.AsValue().AsCode(), 1, 20); //Place json token value in id field of demo table.
 
                 if InputObject.Get('name', InputToken) then
-                    KNHDemo.Name := CopyStr(InputToken.AsValue().AsText(), 1, 50);
+                    KNHDemoAsset.Name := CopyStr(InputToken.AsValue().AsText(), 1, 50);
 
                 InputObject.Get('data', InputToken); //Get data from json object and place in json token. This is a nested json object that requires the next steps to read values from it.
                 if InputToken.IsObject then begin //Check if data token is a json object
@@ -115,51 +115,51 @@ codeunit 51910 KNHJsonFunctions
                     InputObject.ReadFrom(Input); //Place nested json in json object variable to read values from it.
 
                     if InputObject.Get('year', InputToken) then //Get year from json object and place in json token
-                        KNHDemo.Year := InputToken.AsValue().AsInteger(); //Place in demo table
+                        KNHDemoAsset.Year := InputToken.AsValue().AsInteger(); //Place in demo table
 
                     if InputObject.Get('price', InputToken) then
-                        KNHDemo.Price := InputToken.AsValue().AsDecimal();
+                        KNHDemoAsset.Price := InputToken.AsValue().AsDecimal();
 
                     if InputObject.Get('CPU model', InputToken) then
-                        KNHDemo."CPU Model" := CopyStr(InputToken.AsValue().AsText(), 1, 30);
+                        KNHDemoAsset."CPU Model" := CopyStr(InputToken.AsValue().AsText(), 1, 30);
 
                     if InputObject.Get('Hard disk size', InputToken) then
-                        KNHDemo."Hard Disk Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset."Hard Disk Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('color', InputToken) then
-                        KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('Strap Color', InputToken) then
-                        KNHDemo.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Colour := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('Capacity', InputToken) then
-                        KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('Capacity GB', InputToken) then
-                        KNHDemo.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Capacity := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('generation', InputToken) then
-                        KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('Generation', InputToken) then
-                        KNHDemo.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Generation := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('Case Size', InputToken) then
-                        KNHDemo."Case Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset."Case Size" := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
                     if InputObject.Get('Description', InputToken) then
-                        KNHDemo.Description := CopyStr(InputToken.AsValue().AsText(), 1, 20);
+                        KNHDemoAsset.Description := CopyStr(InputToken.AsValue().AsText(), 1, 20);
 
-                    KNHDemo.Insert();
+                    KNHDemoAsset.Insert();
                 end else
                     if ArrayCounter = 0 then
                         Error('Json data is missing');
             end;
         end else
-            Message(NegResponseMsg, Response.HttpStatusCode, Response.ReasonPhrase);
+            Message(NegHttpResponseMessageMsg, HttpHttpResponseMessageMessage.HttpStatusCode, HttpHttpResponseMessageMessage.ReasonPhrase);
     end;
 
-    //Not in use but demonstrates how to handle a json array response from an API endpoint
+    //Not in use but demonstrates how to handle a json array HttpResponseMessage from an API endpoint
     procedure HandleJsonArray(JsonArray: JsonArray)
     var
         JsonObject: JsonObject;
