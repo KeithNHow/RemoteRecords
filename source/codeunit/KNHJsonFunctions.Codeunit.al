@@ -85,7 +85,7 @@ codeunit 51910 KNHJsonFunctions
         KNHDemoAsset: Record KNHDemoAsset;
         HttpClient: HttpClient;
         HttpContent: HttpContent;
-        HttpHttpResponseMessageMessage: HttpResponseMessage;
+        HttpResponseMessage: HttpResponseMessage;
         ArrayCounter: Integer;
         InputArray: JsonArray;
         InputObject: JsonObject;
@@ -94,9 +94,9 @@ codeunit 51910 KNHJsonFunctions
         Input: Text;
         Result: Text;
     begin
-        HttpClient.Get('https://api.restful-api.dev/objects', HttpHttpResponseMessageMessage);
-        if HttpHttpResponseMessageMessage.IsSuccessStatusCode then begin //Check for HttpResponseMessage
-            HttpContent := HttpHttpResponseMessageMessage.Content; //Get content from HttpResponseMessage
+        HttpClient.Get('https://api.restful-api.dev/objects', HttpResponseMessage);
+        if HttpResponseMessage.IsSuccessStatusCode then begin //Check for HttpResponseMessage
+            HttpContent := HttpResponseMessage.Content; //Get content from HttpResponseMessage
             HttpContent.ReadAs(Result); //Place content in text variable
             InputArray.ReadFrom(Result); //Place text variable content in json array variable to read values from it.
             ArrayCounter := InputArray.Count(); //Count number of items in json array.
@@ -156,7 +156,7 @@ codeunit 51910 KNHJsonFunctions
                         Error('Json data is missing');
             end;
         end else
-            Message(NegHttpResponseMessageMsg, HttpHttpResponseMessageMessage.HttpStatusCode, HttpHttpResponseMessageMessage.ReasonPhrase);
+            Message(NegHttpResponseMessageMsg, HttpResponseMessage.HttpStatusCode, HttpResponseMessage.ReasonPhrase);
     end;
 
     //Not in use but demonstrates how to handle a json array HttpResponseMessage from an API endpoint
