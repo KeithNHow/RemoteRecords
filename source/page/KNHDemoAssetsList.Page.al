@@ -1,3 +1,6 @@
+namespace KNHRemoteRecords;
+using Microsoft.Foundation.Attachment;
+
 page 51911 KNHDemoAssetsList
 {
     ApplicationArea = Basic, Suite;

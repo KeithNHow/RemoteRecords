@@ -4,6 +4,10 @@
 /// The HttpTest method makes a get request to an API endpoint and returns the HttpResponseMessage. 
 /// The JsonRead method makes a get request to an API endpoint, reads the Json HttpResponseMessage, and places the data in the KNHDemo table.
 /// </summary>
+namespace KNHRemoteRecords;
+Using Microsoft.Sales.Customer;
+using System.Utilities;
+
 codeunit 51910 KNHJsonFunctions
 {
     procedure JsonExport()

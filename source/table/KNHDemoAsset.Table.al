@@ -1,6 +1,8 @@
 /// <summary>
 /// New table for demo, which will be used for API test. The OnValidate trigger of Id field is used to call JsonRead method in KNH Json Write codeunit, which will read the record and write to a json file in the server.
 /// </summary>
+namespace KNHRemoteRecords;
+
 table 51910 KNHDemoAsset
 {
     Caption = 'Demo Table';

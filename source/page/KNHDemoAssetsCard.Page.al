@@ -2,6 +2,8 @@
 /// This card page is used to test API connection and to create a Json file, based on the KNHDemo table. 
 /// The page has two actions, one for creating a Json file and another for testing the Http connection.
 /// </summary>
+namespace KNHRemoteRecords;
+
 page 51910 KNHDemoAssetsCard
 {
     Caption = 'Demo Assets Card';
@@ -60,10 +62,6 @@ page 51910 KNHDemoAssetsCard
                 Caption = 'Export Customer to Json';
                 ToolTip = 'Export customer details to a json file.';
                 Image = ExportFile;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                PromotedOnly = true;
                 ApplicationArea = All;
                 trigger OnAction()
                 var
@@ -82,10 +80,6 @@ page 51910 KNHDemoAssetsCard
                 Caption = 'Import Json to Demo';
                 ToolTip = 'Import a Json record from a file.';
                 Image = Import;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                PromotedOnly = true;
                 ApplicationArea = All;
                 trigger OnAction()
                 var
@@ -105,10 +99,6 @@ page 51910 KNHDemoAssetsCard
                 ToolTip = 'View json file on http site.';
                 Image = View;
                 ApplicationArea = All;
-                Promoted = true;
-                PromotedCategory = Process;
-                PromotedIsBig = true;
-                PromotedOnly = true;
                 trigger OnAction()
                 var
                     JsonWriteCU: Codeunit KNHJsonFunctions;
@@ -116,6 +106,12 @@ page 51910 KNHDemoAssetsCard
                     JsonWriteCU.HttpTest();
                 end;
             }
+        }
+        area(Promoted)
+        {
+            actionref(Export_Json; ExportJson) { }
+            actionref(Import_Json; ImportJson) { }
+            actionref(Http_Connect; HttpConnect) { }
         }
     }
 }
