@@ -56,6 +56,7 @@ codeunit 51910 KNHJsonFunctions
     var
         HttpClient: HttpClient;
         HttpContent: HttpContent;
+        //HttpRequest: HttpRequestMessage;
         HttpResponseMessage: HttpResponseMessage;
         NegHttpResponseMessageMsg: Label 'HttpResponseMessage was negative %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
         PosHttpResponseMessageMsg: Label 'HttpResponseMessage was positive %1,%2', Comment = '%1 = HttpStatusCode, %2 = Reason';
@@ -72,13 +73,13 @@ codeunit 51910 KNHJsonFunctions
 
         //Method 2
         /*
-        Request.SetRequestUri('https://needlecraftworld.co.uk');
-        Request.Method('Get');
-        Client.Send(Request, HttpResponseMessage);
+        HttpRequest.SetRequestUri('https://needlecraftworld.co.uk');
+        HttpRequest.Method('Get');
+        HttpClient.Send(HttpRequest, HttpResponseMessage);
         if HttpResponseMessage.IsSuccessStatusCode then begin
-            Content := HttpResponseMessage.Content;
-            Content.ReadAs(Output);
-            Message(Output);
+            HttpContent := HttpResponseMessage.Content;
+            HttpContent.ReadAs(Result);
+            Message(Result);
         end else
             Message(NegHttpResponseMessageMsg, HttpResponseMessage.HttpStatusCode, HttpResponseMessage.ReasonPhrase);
         */
